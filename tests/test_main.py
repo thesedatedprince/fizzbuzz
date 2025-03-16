@@ -109,3 +109,17 @@ def test_fizzbuzz_prints_buzz_if_only_divisible_by_5(capsys):
 
         if int(line_num_to_value[0]) % 5 == 0:
             assert line_num_to_value[1] == "buzz"
+
+
+def test_fizzbuzz_prints_fizzbuzz_if_divisible_by_3_and_5(capsys):
+    fizzbuzz(1, 100)
+
+    captured = capsys.readouterr()
+
+    captured_lines = captured.out.split("\n")[:-1]
+
+    for line in captured_lines:
+        line_num_to_value = line.split(" ")
+
+        if int(line_num_to_value[0]) % 5 == 0 and int(line_num_to_value[0]) % 3 == 0:
+            assert line_num_to_value[1] == "fizzbuzz"

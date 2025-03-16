@@ -5,10 +5,10 @@ def fizzbuzz(start: int, end: int):
     InputValidator(start, end).validate()
 
     for i in range(start, end):
-        val = f"{i}"
+        val = f"{i} "
         if i % 3 == 0:
-            val += " fizz"
+            val += "fizz"
 
         if i % 5 == 0:
-            val += " buzz"
+            val += "buzz"
         print(val)
