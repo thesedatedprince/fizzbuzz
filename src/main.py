@@ -17,11 +17,12 @@ def run(start: Union[int, str], end: Union[int, str]):
 
     # NOTE: Spec didn't specify if the start number is lower than the end number
     # so we handle that case here
+    # Additionally, I'm interpreting the spec as being final-value inclusive, hence
+    # the +- 1 to include the end number in the iteration.
     iteration_range = range(validated_start, validated_end + 1)
     if validated_start > validated_end:
         iteration_range = range(validated_start, validated_end - 1, -1)
 
-    # NOTE: Spec was taken to mean end value inclusive, hence the + 1
     for index in iteration_range:
         fizzbuzz_generator = FizzbuzzCalculator(index)
         print(fizzbuzz_generator.get_output_string())
