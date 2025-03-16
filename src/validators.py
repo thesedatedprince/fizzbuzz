@@ -13,13 +13,9 @@ class InputValidator:
 
         Input is valid if an int, or digit as string - i.e '3' - is passed.
         """
-        if type(value) is int:
-            return True
-
-        if hasattr(value, "is_digit") and value.isdigit():  # type: ignore
-            return True
-
-        return False
+        if type(value) is not int and not value.isdigit():  # type: ignore
+            return False
+        return True
 
     def is_valid_input_value(self, value: Union[int, str]) -> bool:
         """Determines validity of input value.
