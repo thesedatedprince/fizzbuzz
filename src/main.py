@@ -6,9 +6,23 @@ from src.validators import InputValidator
 
 
 def run(start: Union[int, str], end: Union[int, str]):
+    """Run the fizzbuzz function, including validation.
+
+    Note, while this does accept a Union of int or string,
+    if a string is passed, it must be a digit to allow the
+    validator to return an integer. This is to handle
+    string input from the command line.
+    """
     validated_start, validated_end = InputValidator(start, end).get_validated_values()
 
-    for index in range(validated_start, validated_end + 1):
+    # NOTE: Spec didn't specify if the start number is lower than the end number
+    # so we handle that case here
+    iteration_range = range(validated_start, validated_end + 1)
+    if validated_start > validated_end:
+        iteration_range = range(validated_start, validated_end - 1, -1)
+
+    # NOTE: Spec was taken to mean end value inclusive, hence the + 1
+    for index in iteration_range:
         fizzbuzz_generator = FizzbuzzCalculator(index)
         print(fizzbuzz_generator.get_output_string())
 

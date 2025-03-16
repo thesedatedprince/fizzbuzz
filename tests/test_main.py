@@ -29,7 +29,7 @@ from src.main import run
         ),
     ],
 )
-def test_fizzbuzz_input_validates_type(start, end, error_message):
+def test_run_input_validates_type(start, end, error_message):
     with pytest.raises(TypeError) as e:
         run(start, end)
     assert error_message in str(e.value)
@@ -54,13 +54,13 @@ def test_fizzbuzz_input_validates_type(start, end, error_message):
         ),
     ],
 )
-def test_fizzbuzz_input_validates_value_boundary(start, end, error_message):
+def test_run_input_validates_value_boundary(start, end, error_message):
     with pytest.raises(ValueError) as e:
         run(start, end)
     assert error_message in str(e.value)
 
 
-def test_fizzbuzz_prints_value_of_each_argument(capsys):
+def test_run_prints_value_of_each_argument(capsys):
     run(1, 10)
 
     captured = capsys.readouterr()
@@ -69,7 +69,7 @@ def test_fizzbuzz_prints_value_of_each_argument(capsys):
         assert str(i) in captured.out
 
 
-def test_fizzbuzz_prints_fizz_if_only_divisible_by_3(capsys):
+def test_run_prints_fizz_if_only_divisible_by_3(capsys):
     run(1, 100)
 
     captured = capsys.readouterr()
@@ -88,7 +88,7 @@ def test_fizzbuzz_prints_fizz_if_only_divisible_by_3(capsys):
             assert line_num_to_value[1] == OutputString.FIZZ
 
 
-def test_fizzbuzz_prints_buzz_if_only_divisible_by_5(capsys):
+def test_run_prints_buzz_if_only_divisible_by_5(capsys):
     run(1, 100)
 
     captured = capsys.readouterr()
@@ -107,7 +107,7 @@ def test_fizzbuzz_prints_buzz_if_only_divisible_by_5(capsys):
             assert line_num_to_value[1] == OutputString.BUZZ
 
 
-def test_fizzbuzz_prints_fizzbuzz_if_divisible_by_3_and_5(capsys):
+def test_run_prints_fizzbuzz_if_divisible_by_3_and_5(capsys):
     run(1, 100)
 
     captured = capsys.readouterr()
@@ -119,3 +119,25 @@ def test_fizzbuzz_prints_fizzbuzz_if_divisible_by_3_and_5(capsys):
 
         if int(line_num_to_value[0]) % 5 == 0 and int(line_num_to_value[0]) % 3 == 0:
             assert line_num_to_value[1] == f"{OutputString.FIZZ}{OutputString.BUZZ}"
+
+
+def test_run_iterates_in_ascending_order(capsys):
+    run(1, 100)
+
+    captured = capsys.readouterr()
+
+    captured_lines = captured.out.split("\n")[:-1]
+
+    assert captured_lines[0].split(" ")[0] == "1"
+    assert captured_lines[-1].split(" ")[0] == "100"
+
+
+def test_run_iterates_in_descending_order(capsys):
+    run(100, 1)
+
+    captured = capsys.readouterr()
+
+    captured_lines = captured.out.split("\n")[:-1]
+
+    assert captured_lines[0].split(" ")[0] == "100"
+    assert captured_lines[-1].split(" ")[0] == "1"
