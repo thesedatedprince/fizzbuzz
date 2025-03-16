@@ -8,4 +8,7 @@ def fizzbuzz(start: int, end: int):
         val = f"{i}"
         if i % 3 == 0:
             val += " fizz"
+
+        if i % 5 == 0:
+            val += " buzz"
         print(val)
