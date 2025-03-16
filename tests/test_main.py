@@ -1,11 +1,7 @@
 import pytest
 
-from src.constants import ErrorMessage
-from src.main import fizzbuzz
-
-# 1. Take two integers between 1 and 100
-# Function must validate type of both arguments
-# Function much validate each argument is between 1 and 100
+from src.constants import ErrorMessage, OutputString
+from src.main import run
 
 
 @pytest.mark.parametrize(
@@ -35,7 +31,7 @@ from src.main import fizzbuzz
 )
 def test_fizzbuzz_input_validates_type(start, end, error_message):
     with pytest.raises(TypeError) as e:
-        fizzbuzz(start, end)
+        run(start, end)
     assert error_message in str(e.value)
 
 
@@ -60,12 +56,12 @@ def test_fizzbuzz_input_validates_type(start, end, error_message):
 )
 def test_fizzbuzz_input_validates_value_boundary(start, end, error_message):
     with pytest.raises(ValueError) as e:
-        fizzbuzz(start, end)
+        run(start, end)
     assert error_message in str(e.value)
 
 
 def test_fizzbuzz_prints_value_of_each_argument(capsys):
-    fizzbuzz(1, 10)
+    run(1, 10)
 
     captured = capsys.readouterr()
 
@@ -74,7 +70,7 @@ def test_fizzbuzz_prints_value_of_each_argument(capsys):
 
 
 def test_fizzbuzz_prints_fizz_if_only_divisible_by_3(capsys):
-    fizzbuzz(1, 100)
+    run(1, 100)
 
     captured = capsys.readouterr()
 
@@ -89,11 +85,11 @@ def test_fizzbuzz_prints_fizz_if_only_divisible_by_3(capsys):
             continue
 
         if int(line_num_to_value[0]) % 3 == 0:
-            assert line_num_to_value[1] == "fizz"
+            assert line_num_to_value[1] == OutputString.FIZZ
 
 
 def test_fizzbuzz_prints_buzz_if_only_divisible_by_5(capsys):
-    fizzbuzz(1, 100)
+    run(1, 100)
 
     captured = capsys.readouterr()
 
@@ -108,11 +104,11 @@ def test_fizzbuzz_prints_buzz_if_only_divisible_by_5(capsys):
             continue
 
         if int(line_num_to_value[0]) % 5 == 0:
-            assert line_num_to_value[1] == "buzz"
+            assert line_num_to_value[1] == OutputString.BUZZ
 
 
 def test_fizzbuzz_prints_fizzbuzz_if_divisible_by_3_and_5(capsys):
-    fizzbuzz(1, 100)
+    run(1, 100)
 
     captured = capsys.readouterr()
 
@@ -122,4 +118,4 @@ def test_fizzbuzz_prints_fizzbuzz_if_divisible_by_3_and_5(capsys):
         line_num_to_value = line.split(" ")
 
         if int(line_num_to_value[0]) % 5 == 0 and int(line_num_to_value[0]) % 3 == 0:
-            assert line_num_to_value[1] == "fizzbuzz"
+            assert line_num_to_value[1] == f"{OutputString.FIZZ}{OutputString.BUZZ}"

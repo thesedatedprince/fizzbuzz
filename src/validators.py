@@ -7,11 +7,12 @@ class InputValidator:
         self.end = end
 
     def is_valid_input_type(self, value):
-        if type(value) is not int:
+        if type(value) is not int and not value.isdigit():
             return False
         return True
 
     def is_valid_input_value(self, value):
+        value = int(value)
         if value < 1 or value > 100:
             return False
         return True
@@ -42,3 +43,7 @@ class InputValidator:
 
         if len(value_validation_errors) > 0:
             raise ValueError(self.join_error_output(value_validation_errors))
+
+    def get_validated_values(self):
+        self.validate()
+        return int(self.start), int(self.end)
