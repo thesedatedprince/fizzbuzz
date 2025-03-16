@@ -71,3 +71,16 @@ def test_fizzbuzz_prints_value_of_each_argument(capsys):
 
     for i in range(1, 10):
         assert str(i) in captured.out
+
+
+def test_fizzbuzz_prints_fizz_if_divisible_by_3(capsys):
+    fizzbuzz(1, 100)
+
+    captured = capsys.readouterr()
+
+    captured_lines = captured.out.split("\n")[:-1]
+
+    for line in captured_lines:
+        line_num_to_value = line.split(" ")
+        if int(line_num_to_value[0]) % 3 == 0:
+            assert line_num_to_value[1] == "fizz"
